@@ -1,34 +1,41 @@
 #include <iostream>
-#include <string.h>  //string
-#include <algorithm> //sort
-#include <math.h>    //pow
+#include <algorithm>
+#include <vector>
 using namespace std;
-
-typedef struct cookie
+struct mooncake
 {
-    int num;
-    float money;
+    float mount, price, unit;
 };
-
-bool cmp(cookie A, cookie B)
+int cmp(mooncake a, mooncake b)
 {
-    return A.money > B.money;
+    return a.unit > b.unit;
 }
-
 int main()
 {
-    int N, D;
-    cin >> N >> D;
-    cookie *arr = (cookie *)malloc(sizeof(cookie) * N);
-    for (int i = 0; i < N; i++)
+    int n, need;
+    cin >> n >> need;
+    vector<mooncake> a(n);
+    for (int i = 0; i < n; i++)
+        scanf("%f", &a[i].mount);
+    for (int i = 0; i < n; i++)
+        scanf("%f", &a[i].price);
+    for (int i = 0; i < n; i++)
+        a[i].unit = a[i].price / a[i].mount;
+    sort(a.begin(), a.end(), cmp);
+    float result = 0.0;
+    for (int i = 0; i < n; i++)
     {
-        cin >> arr[i].num;
+        if (a[i].mount <= need)
+        {
+            result = result + a[i].price;
+        }
+        else
+        {
+            result = result + a[i].unit * need;
+            break;
+        }
+        need = need - a[i].mount;
     }
-    for (int i = 0; i < N; i++)
-    {
-        float summoney;
-        cin >> summoney;
-        arr[i].money = summoney / arr[i].num;
-    }
-    sort(arr, arr + N, cmp);
+    printf("%.2f", result);
+    return 0;
 }
