@@ -15,7 +15,7 @@ int main()
         //		cin >> x >> y;
         scanf("%d %lf", &x, &y);
         a[x] = y;
-    }
+    }  
     // 读入第二行数据
     cin >> n;
     for (int i = 0; i < n; i++)
